@@ -144,6 +144,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     UIImage *image = [UIImage imageWithCGImage:cgImageRef];
         MLKVisionImage *visionImage = [[MLKVisionImage alloc] initWithImage:image];
     
+    UIImageOrientation orientation = [self imageOrientationFromDeviceOrientation:UIDevice.currentDevice.orientation
+            cameraPosition:AVCaptureDevicePositionBack];
+
+    visionImage.orientation = orientation;
+    [self scanBarcodesOnDeviceInImage:visionImage];
+    
     CGImageRelease(cgImageRef);
 }
 
